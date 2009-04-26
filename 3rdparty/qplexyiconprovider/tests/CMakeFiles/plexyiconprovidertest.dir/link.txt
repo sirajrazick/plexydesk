@@ -1,1 +1,0 @@
-/usr/bin/c++      CMakeFiles/plexyiconprovidertest.dir/test.o  -o plexyiconprovidertest -rdynamic ../libplexyiconprovider.so /usr/local/Trolltech/Qt-4.5.1/lib/libQtCore.so /usr/local/Trolltech/Qt-4.5.1/lib/libQtGui.so -Wl,-rpath,/home/malcolm/plexydesk/3rdparty/qplexyiconprovider:/usr/local/Trolltech/Qt-4.5.1/lib 

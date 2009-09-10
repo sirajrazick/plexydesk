@@ -21,7 +21,8 @@
 #define PRESENCE_H_
 
 #include <datainterface.h>
-#include <TelepathyQt4/Client/PendingOperation>
+#include <TelepathyQt4/PendingOperation>
+#include <TelepathyQt4/PendingReady>
 
 class QDBusObjectPath;
 
@@ -40,14 +41,14 @@ signals:
     void data(QVariant&);
 
 private slots:
-	void onAccountReady(Telepathy::Client::PendingOperation *operation);
+    void onAccountReady(Tp::PendingReady *operation);
     void accountCreated(const QString &path);
     void accountRemoved(const QString &path);
     void accountValidityChanged(const QString &path, bool valid);
 
 private:
-	class PresenceDataPrivate;
-	PresenceDataPrivate * const d;
+    class PresenceDataPrivate;
+    PresenceDataPrivate * const d;
 };
 
 #endif //PRESENCE_H_

@@ -145,7 +145,7 @@ add_subdirectory(extensions/data/flicker)
 add_subdirectory(extensions/data/rest)
 #add_subdirectory(extensions/data/rss)
 add_subdirectory(extensions/data/utube)
-add_subdirectory(extensions/data/irc)
+#add_subdirectory(extensions/data/irc) // should be done with telepathy idle
 add_subdirectory(modules/libplexyirc)
 
 #add_subdirectory(extensions/widgets/sociotwitterwidget)

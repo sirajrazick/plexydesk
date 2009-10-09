@@ -41,9 +41,9 @@ public:
 public slots:
     void loadImages(int, bool);
     void nextImage();
-    void pushData(QVariant&);
+    void pushData(QVariantMap&);
 signals:
-    void data(QVariant&);
+    void data(QVariantMap&);
 
 private:
     QPixmap bg;

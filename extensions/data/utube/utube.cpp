@@ -132,10 +132,12 @@ void UtubeData::parseXml()
                 //mThumbString = mThumbString.split(QRegExp("\\s+"));
 
                 QVariant rssitem(mEntry);
+                QVariantMap param;
+                param.insert("data", rssitem);
 
                 //mRssEntries.append(rssitem);
                 
-                emit data( rssitem );
+                emit data(param);
 
                 //mTitleString.clear();
                 //mLinkString.clear();
@@ -166,14 +168,4 @@ void UtubeData::parseXml()
 
     //QVariant rss(mRssEntries);
     //emit data(rss);
-}
-
-QGraphicsItem * UtubeData::item()
-{
-    /// \todo: null for success compilation only
-    return NULL;
-}
-
-void UtubeData::render( QPainter *p,QRectF r )
-{
 }

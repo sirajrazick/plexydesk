@@ -34,7 +34,7 @@ RestData::~RestData()
 {
 }
 
-void RestData::pushData(QVariant& str)
+void RestData::pushData(QVariantMap& str)
 {
 }
 

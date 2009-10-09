@@ -94,9 +94,9 @@ namespace PlexyDesk
             AbstractPluginInterface *Iface = 0;
             Iface = qobject_cast<AbstractPluginInterface*> (plugin);
             d->groups[pluginName] = Iface;
-            qDebug() << "PluginLoader::load" << "Loading.." << Iface << pluginName << endl;
+            qDebug() << Q_FUNC_INFO << "Loading.." << Iface << pluginName << endl;
         } else {
-            qDebug() << loader.errorString() << endl;;
+            qDebug() << Q_FUNC_INFO << pluginName << loader.errorString() << endl;;
         }
     }
 

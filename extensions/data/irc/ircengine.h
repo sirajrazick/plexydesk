@@ -1,5 +1,5 @@
 /*******************************************************************************
-* This file is part of PlexyDesk.
+d* This file is part of PlexyDesk.
 *  Maintained by : Siraj Razick <siraj@kde.org>
 *  Authored By  :
 *
@@ -35,11 +35,10 @@ public:
 public slots:
     /* ID tells you the Qhttp id which youare pocessing
     */
- 	void pushData(QVariant&);
+    void pushData(QVariantMap&);
     void loadCallback(int ID, bool status);
 signals:
-    void data(QVariant&);
+    void data(QVariantMap&);
 };
-
 
 #endif

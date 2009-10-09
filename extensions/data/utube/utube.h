@@ -38,16 +38,14 @@ public:
     UtubeData( QObject * object = 0 );
     virtual ~UtubeData();
     void init();
-    virtual QGraphicsItem * item();// {};
-    virtual void render( QPainter *p,QRectF r );// {};
 
 public slots:
     void fetch();
     void finished( int id, bool error );
     void readData( const QHttpResponseHeader & );
-    void pushData(QVariant&) {}
+    void pushData(QVariantMap&) {}
 signals:
-    void data( QVariant& );
+    void data(QVariantMap& );
     void success();
 
 private:

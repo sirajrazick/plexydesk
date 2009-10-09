@@ -37,10 +37,10 @@ public:
 public slots:
     /* ID tells you the Qhttp id which youare pocessing
     */
-    void pushData(QVariant& data);
+    void pushData(QVariantMap& data);
     void loadCallback(int ID, bool status);
 signals:
-    void data(QVariant&);
+    void data(QVariantMap&);
 
 private:
 };

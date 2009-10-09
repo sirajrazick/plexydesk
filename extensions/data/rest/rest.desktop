@@ -3,4 +3,4 @@ Encoding=UTF-8
 Name=Rest Network Data Engine
 Type=Engine
 Comment=Handle RestFul services
-X-PLEXYDESK-Library=exampleengine
+X-PLEXYDESK-Library=restengine

@@ -77,9 +77,10 @@ void FlickerData::nextImage()
     }
 }
 
-void FlickerData::pushData(QVariant& str)
+void FlickerData::pushData(QVariantMap& dat)
 {
     http->abort();
+    QVariant str = dat["key"];
     searchkey = str.toString();
     init();
 }
@@ -122,8 +123,9 @@ void FlickerData::loadImages(int id, bool stat)
             newWall = QImage(QImage::fromData(img));
 
             if (!newWall.isNull()) {
-                QVariant image(img);
-                emit data(image);
+                QVariantMap param;
+                param.insert("image",img);
+                Q_EMIT data(param);
             }else {
                 qDebug()<<"Invalid Image data"<<endl;
             }

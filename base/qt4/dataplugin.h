@@ -4,6 +4,7 @@
 #include <plexy.h>
 #include <config.h>
 #include <baseplugin.h>
+#include <QVariantMap>
 
 namespace PlexyDesk
 {
@@ -14,9 +15,9 @@ namespace PlexyDesk
         DataPlugin(QObject  * object = 0) {}
         virtual ~DataPlugin() {}
     public slots:
-        virtual void pushData(QVariant&) = 0;
+        virtual void pushData(QVariantMap&) = 0;
     signals:
-        void data(QVariant&);
+        void data(QVariantMap&);
     };
 }
 #endif

@@ -77,6 +77,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/extensions/data/flicker
     ${CMAKE_BINARY_DIR}/extensions/data/rss
     ${CMAKE_BINARY_DIR}/extensions/data/irc
+    ${CMAKE_BINARY_DIR}/extensions/data/rest
     ${CMAKE_BINARY_DIR}/extensions/data/utube
     ${CMAKE_BINARY_DIR}/extensions/data/videoengine 
     ${CMAKE_BINARY_DIR}/modules/libplexyirc/ 
@@ -141,10 +142,12 @@ add_subdirectory(extensions/widgets/videoview)
 add_subdirectory(extensions/widgets/youtubewidget)
 #add_subdirectory(extensions/data/presence)
 add_subdirectory(extensions/data/flicker)
+add_subdirectory(extensions/data/rest)
 #add_subdirectory(extensions/data/rss)
 add_subdirectory(extensions/data/utube)
 add_subdirectory(extensions/data/irc)
 add_subdirectory(modules/libplexyirc)
+
 #add_subdirectory(extensions/widgets/sociotwitterwidget)
 if(FULL_DESKTOP)
 add_subdirectory(modules/QtWin)

@@ -50,10 +50,11 @@ public:
     void drawWidget();;
 */
 public Q_SLOTS:
-    void data(QVariant&);
+    void data(QVariantMap&);
     void drawItems();
 Q_SIGNALS:
     void dataChanged();
+    void newData(QVariantMap&);
 
 private:
 
@@ -74,6 +75,8 @@ private:
 
     QList<VideoEntity> mVideos;
     QMap<QString,QVariant> mVariantMap;
+    QVariantMap mMap;
+    PlexyDesk::DataPlugin * plugin;
 };
 
 } // namespace PlexyDesk

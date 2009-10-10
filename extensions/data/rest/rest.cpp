@@ -36,28 +36,29 @@ class RestData::Private
 
 RestData::RestData(QObject * object):d(new Private)
 {
+
+    d->manager = new QNetworkAccessManager(this);
+   connect(d->manager, SIGNAL(finished(QNetworkReply*)),
+           this, SLOT(replyFinished(QNetworkReply*)));
+   connect(d->manager, SIGNAL(authenticationRequired (QNetworkReply *, QAuthenticator *)), this,
+          SLOT(handleAuth(QNetworkReply *, QAuthenticator *)));
 }
 
 void  RestData::init()
 {
-   d->manager = new QNetworkAccessManager(this);
-   connect(d->manager, SIGNAL(finished(QNetworkReply*)),
-           this, SLOT(replyFinished(QNetworkReply*)));
-   connect(d->manager, SIGNAL(authenticationRequired (QNetworkReply *, QAuthenticator *)), this,
-          SLOT(handleAuth(QNetworkReply *, QAuthenticator *))); 
-
+    qDebug() << Q_FUNC_INFO ;
 }
 
 RestData::~RestData()
 {
+ qDebug() << Q_FUNC_INFO ;
     delete d;
 }
 
-void RestData::pushData(QVariantMap& param)
+void RestData::pushData(const QVariantMap& param)
 {
-    if (!d->manager) {
-        init();
-    }
+    qDebug() << Q_FUNC_INFO ;
+    return;
 
     QUrl url = param["url"].toUrl();
     int type = param["type"].toInt();
@@ -66,11 +67,11 @@ void RestData::pushData(QVariantMap& param)
     d->pass = param["pass"].toString();
 
     if (type == GET) {
-       d->manager->get(QNetworkRequest(url)); 
+       d->manager->get(QNetworkRequest(url));
     } else if (type == POST) {
         d->manager->post(QNetworkRequest(url), par.toAscii());
     }
-    //TODO 
+    //TODO
     //handle errors
 }
 

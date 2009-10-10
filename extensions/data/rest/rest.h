@@ -35,7 +35,7 @@ public:
     virtual ~RestData();
     void init();
 public Q_SLOTS:
-    void pushData(QVariantMap& data);
+    void pushData(const QVariantMap& data);
     void replyFinished(QNetworkReply* reply);
     void handleAuth(QNetworkReply*, QAuthenticator*);
 Q_SIGNALS:

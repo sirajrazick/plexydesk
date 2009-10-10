@@ -43,7 +43,7 @@ public slots:
     void fetch();
     void finished( int id, bool error );
     void readData( const QHttpResponseHeader & );
-    void pushData(QVariantMap&) {}
+    void pushData(const QVariantMap&) {}
 signals:
     void data(QVariantMap& );
     void success();

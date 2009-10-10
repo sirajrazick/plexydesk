@@ -35,11 +35,21 @@ namespace PlexyDesk
 TwitWidget::TwitWidget (const QRectF &rect, QWidget *widget):
 ListView(rect,widget)
 {
-  PlexyDesk::DataInterface * utubeEngine = (PlexyDesk::DataInterface*)
-  PlexyDesk::PluginLoader::getInstance()->instance("utubeengine");
+  PlexyDesk::AbstractPluginInterface * utubeEngine = (PlexyDesk::AbstractPluginInterface*)
+  PlexyDesk::PluginLoader::getInstance()->instance("restengine");
+  mMap.insert("url", QUrl("http://twitter.com/statuses/update.xml"));
+  mMap.insert("type", 0);//post
+  mMap.insert("user", "sirajrazick");
+  mMap.insert("pass", "ijs3792");
+  //utubeEngine->instance()->pushData(map);
 
   if (utubeEngine) {
-      connect(utubeEngine,SIGNAL(data(QVariant&)),this,SLOT(data(QVariant&)));
+      connect(utubeEngine,SIGNAL(data(QVariantMap&)),this,SLOT(data(QVariantMap&)));
+      //connect(this ,SIGNAL(newData(QVariantMap&)), utubeEngine->instance(),SLOT(pushData(QVariantMap&)));
+      if (utubeEngine->instance()) {
+        qDebug() << Q_FUNC_INFO << utubeEngine;
+      }
+      //utubeEngine->inst;pushData(mMap);
   }else {
       qDebug("DataSource Was Null");
   }
@@ -48,8 +58,10 @@ ListView(rect,widget)
 TwitWidget::~TwitWidget ()
 {}
 
-void TwitWidget::data(QVariant& data)
+void TwitWidget::data(QVariantMap& data)
 {
+    qDebug() << Q_FUNC_INFO << data["data"];
+/*
     mVariantMap = data.toMap();
 
     VideoEntity videoentity;
@@ -70,5 +82,6 @@ void TwitWidget::data(QVariant& data)
     insert(item);
 
     emit dataChanged();
+    */
 }
 } // namespace PlexyDesk

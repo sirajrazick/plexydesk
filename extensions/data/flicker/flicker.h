@@ -41,7 +41,7 @@ public:
 public slots:
     void loadImages(int, bool);
     void nextImage();
-    void pushData(QVariantMap&);
+    void pushData(const QVariantMap&);
 signals:
     void data(QVariantMap&);
 

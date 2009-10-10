@@ -15,7 +15,7 @@ namespace PlexyDesk
         DataPlugin(QObject  * object = 0) {}
         virtual ~DataPlugin() {}
     public slots:
-        virtual void pushData(QVariantMap&) = 0;
+        virtual void pushData(const QVariantMap&) = 0;
     signals:
         void data(QVariantMap&);
     };

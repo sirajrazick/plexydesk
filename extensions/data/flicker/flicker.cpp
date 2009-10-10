@@ -77,7 +77,7 @@ void FlickerData::nextImage()
     }
 }
 
-void FlickerData::pushData(QVariantMap& dat)
+void FlickerData::pushData(const QVariantMap& dat)
 {
     http->abort();
     QVariant str = dat["key"];

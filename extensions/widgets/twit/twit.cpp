@@ -31,5 +31,8 @@ Twit::~Twit()
 
 QGraphicsItem * Twit::item()
 {
+   PlexyDesk::AbstractPluginInterface * utubeEngine = (PlexyDesk::AbstractPluginInterface*)
+   PlexyDesk::PluginLoader::getInstance()->instance("restengine");
+   qDebug() << Q_FUNC_INFO << utubeEngine->instance();
     return new PlexyDesk::TwitWidget(QRectF(0,0,480,320),0);
 }

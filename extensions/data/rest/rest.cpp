@@ -30,6 +30,8 @@ class RestData::Private
         Private() {}
         ~Private() {}
         QNetworkAccessManager * manager;
+        QString user;
+        QString pass;
 };
 
 RestData::RestData(QObject * object):d(new Private)
@@ -41,6 +43,8 @@ void  RestData::init()
    d->manager = new QNetworkAccessManager(this);
    connect(d->manager, SIGNAL(finished(QNetworkReply*)),
            this, SLOT(replyFinished(QNetworkReply*)));
+   connect(d->manager, SIGNAL(authenticationRequired (QNetworkReply *, QAuthenticator *)), this,
+          SLOT(handleAuth(QNetworkReply *, QAuthenticator *))); 
 
 }
 
@@ -58,6 +62,8 @@ void RestData::pushData(QVariantMap& param)
     QUrl url = param["url"].toUrl();
     int type = param["type"].toInt();
     QString par = param["params"].toString();
+    d->user = param["user"].toString();
+    d->pass = param["pass"].toString();
 
     if (type == GET) {
        d->manager->get(QNetworkRequest(url)); 
@@ -75,4 +81,10 @@ void RestData::replyFinished(QNetworkReply* reply)
      Q_EMIT data(response);
 }
 
+void RestData::handleAuth(QNetworkReply * r, QAuthenticator * auth)
+{
+    qDebug() << Q_FUNC_INFO ;
 
+    auth->setUser(d->user);
+    auth->setPassword(d->pass);
+}

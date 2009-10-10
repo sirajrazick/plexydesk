@@ -37,6 +37,7 @@ public:
 public Q_SLOTS:
     void pushData(QVariantMap& data);
     void replyFinished(QNetworkReply* reply);
+    void handleAuth(QNetworkReply*, QAuthenticator*);
 Q_SIGNALS:
     void data(QVariantMap&);
 

@@ -19,27 +19,53 @@
 #include "rest.h"
 #include <desktopwidget.h>
 #include <plexyconfig.h>
+#include <QNetworkAccessManager>
 
+#define POST 0
+#define GET 1
 
+class RestData::Private
+{
+    public:
+        Private() {}
+        ~Private() {}
+        QNetworkAccessManager * manager;
+};
 
-RestData::RestData(QObject * object)
+RestData::RestData(QObject * object):d(new Private)
 {
 }
 
 void  RestData::init()
 {
+   d->manager = new QNetworkAccessManager(this);
+   connect(d->manager, SIGNAL(finished(QNetworkReply*)),
+           this, SLOT(replyFinished(QNetworkReply*)));
+
 }
 
 RestData::~RestData()
 {
+    delete d;
 }
 
-void RestData::pushData(QVariantMap& str)
+void RestData::pushData(QVariantMap& param)
 {
+    QUrl url = param["url"].toUrl();
+    int type = param["type"].toInt();
+
+    if (type == GET) {
+       d->manager->get(QNetworkRequest(url)); 
+    } else if (type == POST) {
+        //todo post
+    }
 }
 
-void RestData::loadCallback(int id, bool stat)
+void RestData::replyFinished(QNetworkReply* reply)
 {
+     QVariantMap response;
+     response["data"] = QVariant(reply->readAll());
+     Q_EMIT data(response);
 }
 
 

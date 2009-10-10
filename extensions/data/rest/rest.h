@@ -34,15 +34,15 @@ public:
     RestData(QObject * object = 0);
     virtual ~RestData();
     void init();
-public slots:
-    /* ID tells you the Qhttp id which youare pocessing
-    */
+public Q_SLOTS:
     void pushData(QVariantMap& data);
-    void loadCallback(int ID, bool status);
-signals:
+    void replyFinished(QNetworkReply* reply);
+Q_SIGNALS:
     void data(QVariantMap&);
 
 private:
+    class Private;
+    Private * const d;
 };
 
 

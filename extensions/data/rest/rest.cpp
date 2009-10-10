@@ -51,14 +51,21 @@ RestData::~RestData()
 
 void RestData::pushData(QVariantMap& param)
 {
+    if (!d->manager) {
+        init();
+    }
+
     QUrl url = param["url"].toUrl();
     int type = param["type"].toInt();
+    QString par = param["params"].toString();
 
     if (type == GET) {
        d->manager->get(QNetworkRequest(url)); 
     } else if (type == POST) {
-        //todo post
+        d->manager->post(QNetworkRequest(url), par.toAscii());
     }
+    //TODO 
+    //handle errors
 }
 
 void RestData::replyFinished(QNetworkReply* reply)

@@ -52,10 +52,12 @@ namespace PlexyDesk
      public Q_SLOTS:
         void setWallpaper(const QString& str);
         void addWidget(const QString& widget);
+	void changeLayer(const QString& layer);
 
     Q_SIGNALS:
         void configChanged();
         void widgetAdded();
+	void layerChange();
     private:
         Config(const QString & organization, const QString & application = QString(), QObject * parent = 0);
         static Config * config;

@@ -15,7 +15,7 @@ public:
     List * currentList;
 };
 
-ViewLayer::ViewLayer(QObject * obj) : QObject(obj),  d(new Private)
+ViewLayer::ViewLayer(QObject * obj) : QObject(obj),  d(new Private), p(new Private)
 {
     d->currentList = new Private::List;
 }
@@ -23,6 +23,7 @@ ViewLayer::ViewLayer(QObject * obj) : QObject(obj),  d(new Private)
 ViewLayer::~ViewLayer()
 {
     delete d;
+    delete p;
 }
 
 void ViewLayer::addItem(const QString& layerName, DesktopWidget * item)
@@ -41,6 +42,7 @@ void ViewLayer::showLayer(const QString& layername)
     if (!d->layer.contains(layername)) {
         qDebug("Invalid Layer:  ViewLayer::showLayer()");
     } else {
+	qDebug()<<"ViewLayer::showLayer()-->"<<layername;
         for (int i = 0; i < d->currentList->size(); i++) {
             if (d->currentList->at(i)) {
                 d->currentList->at(i)->hide();
@@ -53,8 +55,50 @@ void ViewLayer::showLayer(const QString& layername)
             }
         }
     }
+	}
+void ViewLayer::hideLayer(const QString& layerName)
+{
+    if (!d->layer.contains(layerName)) {
+        qDebug("Invalid Layer:  ViewLayer::hideLayer()");
+    } else {
+	qDebug()<<"ViewLayer::hideLayer()-->"<<layerName;
+	p->currentList = d->currentList;
+	d->currentList = d->layer[layerName];
+        for (int i = 0; i < d->currentList->size(); i++) {
+            if (d->currentList->at(i)) {
+                d->currentList->at(i)->hide();
+            }
+        }
+	d->currentList = p->currentList;
+    }
 }
 
+void ViewLayer::switchLayer()
+{
+	QString newLayer;
+	QString currentLayer = d->layer.key(d->currentList);
+	QList<QString> keysList = d->layer.keys();
+	int totalLayers = d->layer.count();
+	int index = -1;
+	for (int i =0;i<totalLayers;i++)
+	{
+		if (keysList[i]==currentLayer)
+			index = i;
+	}
+	if (index != totalLayers - 1)
+	{
+		newLayer = keysList.at(index+1);
+	}
+	else
+	{
+		newLayer = keysList.at(0);
+	}
+	hideLayer(currentLayer);
+	showLayer(newLayer);
+	
+	qDebug()<<"CurrentLayer::"<<currentLayer;
+	qDebug()<<"NewLayer::"<<newLayer;
+}
 QStringList ViewLayer::layerIndex() const
 {
     return d->layer.keys();

@@ -25,12 +25,17 @@ public:
     void addItem(const QString& layerName , DesktopWidget *item);
 
     void showLayer(const QString& layer);
+    void hideLayer(const QString& layer);
+    //void switchLayer(int switchTo = 1);
 
     QStringList layerIndex() const;
+public slots:
+    void switchLayer();	
 
 private:
     class Private;
     Private *const d;
+    Private *const p;
 };
 } // namespace PlexyDesk
 

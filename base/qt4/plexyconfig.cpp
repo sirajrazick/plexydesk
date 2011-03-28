@@ -112,4 +112,11 @@ void Config::addWidget(const QString& widget)
     emit widgetAdded();
     writeToFile();
 }
+
+void Config::changeLayer(const QString& layer)
+{
+	qDebug()<<"Emitting Config::layerChange()";
+	emit layerChange();
+	qDebug()<<"DONE";
+}
 }

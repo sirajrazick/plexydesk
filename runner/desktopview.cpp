@@ -92,11 +92,13 @@ DesktopView::DesktopView(QGraphicsScene * scene, QWidget * parent):QGraphicsView
     QTimer::singleShot(100, this, SLOT(loadIcons()));
     connect(Config::getInstance(), SIGNAL(configChanged()), this, SLOT(backgroundChanged()));
     connect(Config::getInstance(), SIGNAL(widgetAdded()), this, SLOT(onNewWidget()));
+    connect(Config::getInstance(), SIGNAL(layerChange()), d->layer, SLOT(switchLayer()));
 }
 
 void DesktopView::onNewWidget()
 {
-    addExtension(Config::getInstance()->widgetList.last());
+    QString widget = Config::getInstance()->widgetList.last();
+    addExtension(widget);
 }
 
 void DesktopView::enableOpenGL(bool state)
@@ -156,7 +158,17 @@ void DesktopView::addExtension(const QString& name)
             scene()->addItem(widget);
             widget->setPos(d->row,d->column);
             d->row += widget->boundingRect().width()+d->margin;
-            d->layer->addItem("Widgets",widget);
+		//trying to seperate the widgets adding to the respective layers
+	    if (name == "plexytwit"){
+		d->layer->addItem("Social",widget);
+		d->layer->showLayer("Social");
+		d->layer->hideLayer("Widgets");
+	    }
+	    else{
+            	d->layer->addItem("Widgets",widget);
+		d->layer->showLayer("Widgets");
+		d->layer->hideLayer("Social");
+	    }
         }
     }
 

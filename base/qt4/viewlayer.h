@@ -8,7 +8,7 @@
 
 namespace PlexyDesk
 {
-class VISIBLE_SYM ViewLayer : public  QObject
+class PLEXYDESK_EXPORT ViewLayer : public  QObject
 {
     Q_OBJECT
 public:
@@ -37,6 +37,6 @@ private:
     Private *const d;
     Private *const p;
 };
-} // namespace PlexyDesk
+}// namespace PlexyDesk
 
 #endif

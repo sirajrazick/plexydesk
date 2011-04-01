@@ -12,10 +12,10 @@ public:
     typedef QHash <QString, List*> Layer;
 
     Layer layer;
-    List * currentList;
+    List *currentList;
 };
 
-ViewLayer::ViewLayer(QObject * obj) : QObject(obj),  d(new Private), p(new Private)
+ViewLayer::ViewLayer(QObject *obj) : QObject(obj),  d(new Private), p(new Private)
 {
     d->currentList = new Private::List;
 }
@@ -26,23 +26,23 @@ ViewLayer::~ViewLayer()
     delete p;
 }
 
-void ViewLayer::addItem(const QString& layerName, DesktopWidget * item)
+void ViewLayer::addItem(const QString &layerName, DesktopWidget *item)
 {
     if (d->layer.contains(layerName)) {
         d->layer[layerName]->append(item);
     } else {
-        Private::List* itemlayer   = new Private::List;
+        Private::List *itemlayer   = new Private::List;
         itemlayer->append(item);
         d->layer[layerName] = itemlayer;
     }
 }
 
-void ViewLayer::showLayer(const QString& layername)
+void ViewLayer::showLayer(const QString &layername)
 {
     if (!d->layer.contains(layername)) {
         qDebug("Invalid Layer:  ViewLayer::showLayer()");
     } else {
-	qDebug()<<"ViewLayer::showLayer()-->"<<layername;
+	qDebug()<<Q_FUNC_INFO <<layername;
         for (int i = 0; i < d->currentList->size(); i++) {
             if (d->currentList->at(i)) {
                 d->currentList->at(i)->hide();
@@ -56,12 +56,12 @@ void ViewLayer::showLayer(const QString& layername)
         }
     }
 	}
-void ViewLayer::hideLayer(const QString& layerName)
+void ViewLayer::hideLayer(const QString &layerName)
 {
     if (!d->layer.contains(layerName)) {
         qDebug("Invalid Layer:  ViewLayer::hideLayer()");
     } else {
-	qDebug()<<"ViewLayer::hideLayer()-->"<<layerName;
+	qDebug()<<Q_FUNC_INFO <<layerName;
 	p->currentList = d->currentList;
 	d->currentList = d->layer[layerName];
         for (int i = 0; i < d->currentList->size(); i++) {

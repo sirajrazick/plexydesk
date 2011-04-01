@@ -97,14 +97,14 @@ void Config::writeToFile()
     sync();
 }
 
-void Config::setWallpaper(const QString& str)
+void Config::setWallpaper(const QString &str)
 {
     CurrentWallpaper = str;
     setValue("CurrentWallpaper", CurrentWallpaper);
     emit configChanged();
 }
 
-void Config::addWidget(const QString& widget)
+void Config::addWidget(const QString &widget)
 {
     //TODO: Check if this is a valid widgetname
     widgetList.append(widget);
@@ -113,10 +113,9 @@ void Config::addWidget(const QString& widget)
     writeToFile();
 }
 
-void Config::changeLayer(const QString& layer)
+void Config::changeLayer(const QString &layer)
 {
-	qDebug()<<"Emitting Config::layerChange()";
+	qDebug()<<Q_FUNC_INFO;
 	emit layerChange();
-	qDebug()<<"DONE";
 }
 }

@@ -38,34 +38,34 @@
 #include <QPropertyAnimation>
 #endif
 
-namespace PlexyDesk
-{
-class  DesktopView::Private
+//namespace PlexyDesk
+//{
+class DesktopView::Private
 {
 public:
     Private() {}
     ~Private() {}
-    AbstractPluginInterface * bIface ;
-    BackdropPlugin * bgPlugin;
-    WidgetPlugin * widgets;
-    QGraphicsGridLayout * gridLayout;
-    ViewLayer *  layer;
+    PlexyDesk::AbstractPluginInterface *bIface ;
+    PlexyDesk::BackdropPlugin *bgPlugin;
+    PlexyDesk::WidgetPlugin *widgets;
+    QGraphicsGridLayout *gridLayout;
+    PlexyDesk::ViewLayer *layer;
     float row;
     float column;
     float margin;
     bool openglOn;
-    QList<Icon*> icons;
-    IconProviderPtr iconprovider;
-    QFutureWatcher<Icon*> *iconWatcher;
+    QList<PlexyDesk::Icon*> icons;
+    PlexyDesk::IconProviderPtr iconprovider;
+    QFutureWatcher<PlexyDesk::Icon*> *iconWatcher;
     QPlexyMime *mime;
 };
 
-bool getLessThanWidget(const QGraphicsItem* it1, const QGraphicsItem* it2)
+bool getLessThanWidget(const QGraphicsItem *it1, const QGraphicsItem *it2)
 {
     return it1->zValue() < it2->zValue();
 }
 
-DesktopView::DesktopView(QGraphicsScene * scene, QWidget * parent):QGraphicsView(scene,parent),d(new Private)
+DesktopView::DesktopView(QGraphicsScene *scene, QWidget *parent):QGraphicsView(scene,parent),d(new Private)
 {
     /* setup */
     setWindowFlags(Qt::FramelessWindowHint);
@@ -80,24 +80,24 @@ DesktopView::DesktopView(QGraphicsScene * scene, QWidget * parent):QGraphicsView
 
     /* init */
     d->mime = new QPlexyMime(this);
-    d->bgPlugin  = static_cast<BackdropPlugin*>(PluginLoader::getInstance()->instance("classicbackdrop"));
+    d->bgPlugin  = static_cast<PlexyDesk::BackdropPlugin*>(PlexyDesk::PluginLoader::getInstance()->instance("classicbackdrop"));
     d->widgets = 0;
     d->gridLayout = new QGraphicsGridLayout();
     d->row=d->column = 0.0;
     d->margin = 10.0;
-    d->layer = new ViewLayer();
-    d->iconprovider = IconProviderPtr(new IconProvider, &QObject::deleteLater);
-    d->iconWatcher = new QFutureWatcher<Icon*>(this);
+    d->layer = new PlexyDesk::ViewLayer();
+    d->iconprovider = PlexyDesk::IconProviderPtr(new PlexyDesk::IconProvider, &QObject::deleteLater);
+    d->iconWatcher = new QFutureWatcher<PlexyDesk::Icon*>(this);
 
     QTimer::singleShot(100, this, SLOT(loadIcons()));
-    connect(Config::getInstance(), SIGNAL(configChanged()), this, SLOT(backgroundChanged()));
-    connect(Config::getInstance(), SIGNAL(widgetAdded()), this, SLOT(onNewWidget()));
-    connect(Config::getInstance(), SIGNAL(layerChange()), d->layer, SLOT(switchLayer()));
+    connect(PlexyDesk::Config::getInstance(), SIGNAL(configChanged()), this, SLOT(backgroundChanged()));
+    connect(PlexyDesk::Config::getInstance(), SIGNAL(widgetAdded()), this, SLOT(onNewWidget()));
+    connect(PlexyDesk::Config::getInstance(), SIGNAL(layerChange()), d->layer, SLOT(switchLayer()));
 }
 
 void DesktopView::onNewWidget()
 {
-    QString widget = Config::getInstance()->widgetList.last();
+    QString widget = PlexyDesk::Config::getInstance()->widgetList.last();
     addExtension(widget);
 }
 
@@ -126,7 +126,7 @@ void DesktopView::backgroundChanged()
         delete d->bgPlugin;
     }
     d->bgPlugin  =
-        static_cast<BackdropPlugin*>(PluginLoader::getInstance()->instance("classicbackdrop"));
+        static_cast<PlexyDesk::BackdropPlugin*>(PlexyDesk::PluginLoader::getInstance()->instance("classicbackdrop"));
     if (!d->openglOn) {
         setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     }
@@ -145,26 +145,29 @@ void DesktopView::backgroundChanged()
 /*
 Adds an Widget Extension to Plexy Desktop, give the widget
 name in string i.e "clock" or "radio", the internals will
-take care of the loading the widget plugin name is correct
+take care of the loading the widget plugin name is correct, 
+and load it to the correct layer
 */
 
-void DesktopView::addExtension(const QString& name)
+void DesktopView::addExtension(const QString &name)
 {
-    d->widgets = static_cast<WidgetPlugin*>(PluginLoader::getInstance()->instance(name));
+    d->widgets = static_cast<PlexyDesk::WidgetPlugin*>(PlexyDesk::PluginLoader::getInstance()->instance(name));
     if (d->widgets) {
-        DesktopWidget * widget = (DesktopWidget*) d->widgets->item();
+        PlexyDesk::DesktopWidget * widget = (PlexyDesk::DesktopWidget*) d->widgets->item();
         if (widget) {
-            widget->configState(DesktopWidget::DOCK);
+            widget->configState(PlexyDesk::DesktopWidget::DOCK);
             scene()->addItem(widget);
             widget->setPos(d->row,d->column);
             d->row += widget->boundingRect().width()+d->margin;
-		//trying to seperate the widgets adding to the respective layers
+	    //TODO each widget must have a recognition signature
+	    //signature will be used to place the widget to correct layer
 	    if (name == "plexytwit"){
 		d->layer->addItem("Social",widget);
 		d->layer->showLayer("Social");
 		d->layer->hideLayer("Widgets");
 	    }
-	    else{
+	    else
+            {
             	d->layer->addItem("Widgets",widget);
 		d->layer->showLayer("Widgets");
 		d->layer->hideLayer("Social");
@@ -174,10 +177,10 @@ void DesktopView::addExtension(const QString& name)
 
 }
 
-void DesktopView::addCoreExtension(const QString& name)
+void DesktopView::addCoreExtension(const QString &name)
 {
 
-    d->widgets = static_cast<WidgetPlugin*>(PluginLoader::getInstance()->instance(name));
+    d->widgets = static_cast<PlexyDesk::WidgetPlugin*>(PlexyDesk::PluginLoader::getInstance()->instance(name));
     if (d->widgets) {
         QGraphicsRectItem  * widget = (QGraphicsRectItem*) d->widgets->item();
         if (widget) {
@@ -198,7 +201,7 @@ delete newEvent;
 }
 */
 
-void DesktopView::drawBackground(QPainter * painter, const QRectF & rect)
+void DesktopView::drawBackground(QPainter *painter, const QRectF &rect)
 {
 
     painter->setCompositionMode(QPainter::CompositionMode_Source);
@@ -253,12 +256,12 @@ void DesktopView::loadIcons()
 
     for (int i = 0; i < list.size(); i++) {
         QFileInfo fileInfo = list.at(i);
-        QPixmap iconpixmap (DesktopWidget::applicationDirPath() +
+        QPixmap iconpixmap (PlexyDesk::DesktopWidget::applicationDirPath() +
                             "/share/plexy/skins/widgets/widget01/Icon.png");
         //TODO
         //Shared pointer please
 
-        Icon * icon = new Icon(d->iconprovider, d->mime, QRect(0,0,iconpixmap.width(),iconpixmap.height()));
+        PlexyDesk::Icon * icon = new PlexyDesk::Icon(d->iconprovider, d->mime, QRect(0,0,iconpixmap.width(),iconpixmap.height()));
         connect(icon, SIGNAL(iconLoaded()), this, SLOT(iconLoaded()));
         icon->setContent(fileInfo.absoluteFilePath());
         d->icons.append(icon);
@@ -267,7 +270,7 @@ void DesktopView::loadIcons()
     if(d->icons.isEmpty())
         return;
 
-    Icon *icon = d->icons.first();
+    PlexyDesk::Icon *icon = d->icons.first();
     connect(d->mime, SIGNAL(fromFileNameMime(const MimePairType)), icon, SLOT(fromFileNameMime(const MimePairType)));
     connect(d->mime, SIGNAL(genericIconNameMime(const MimePairType)), icon, SLOT(genericIconNameMime(const MimePairType)));
     icon->loadContent();
@@ -275,7 +278,7 @@ void DesktopView::loadIcons()
 
 void DesktopView::iconLoaded()
 {
-    Icon *icon = qobject_cast<Icon*>(sender());
+    PlexyDesk::Icon *icon = qobject_cast<PlexyDesk::Icon*>(sender());
 
     if (icon->isValid()) {
         scene()->addItem(icon);
@@ -300,7 +303,7 @@ void DesktopView::iconLoaded()
     if(index > d->icons.size())
         return;
 
-    Icon *nextIcon = d->icons.value(index);
+    PlexyDesk::Icon *nextIcon = d->icons.value(index);
     connect(d->mime, SIGNAL(fromFileNameMime(const MimePairType)), nextIcon, SLOT(fromFileNameMime(const MimePairType)));
     connect(d->mime, SIGNAL(genericIconNameMime(const MimePairType)), nextIcon, SLOT(genericIconNameMime(const MimePairType)));
     nextIcon->loadContent();
@@ -308,7 +311,7 @@ void DesktopView::iconLoaded()
 
 void DesktopView::showIcon(int num)
 {
-    Icon *icon = d->iconWatcher->resultAt(num);
+    PlexyDesk::Icon *icon = d->iconWatcher->resultAt(num);
     if (icon)
     {
         scene()->addItem(icon);
@@ -316,7 +319,4 @@ void DesktopView::showIcon(int num)
     }
 }
 
-}
-
-
-
+//}

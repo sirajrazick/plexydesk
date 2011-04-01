@@ -42,7 +42,7 @@ void ViewLayer::showLayer(const QString &layername)
     if (!d->layer.contains(layername)) {
         qDebug("Invalid Layer:  ViewLayer::showLayer()");
     } else {
-	qDebug()<<Q_FUNC_INFO <<layername;
+        qDebug()<<Q_FUNC_INFO <<layername;
         for (int i = 0; i < d->currentList->size(); i++) {
             if (d->currentList->at(i)) {
                 d->currentList->at(i)->hide();
@@ -61,7 +61,7 @@ void ViewLayer::hideLayer(const QString &layerName)
     if (!d->layer.contains(layerName)) {
         qDebug("Invalid Layer:  ViewLayer::hideLayer()");
     } else {
-	qDebug()<<Q_FUNC_INFO <<layerName;
+        qDebug()<<Q_FUNC_INFO <<layerName;
 	p->currentList = d->currentList;
 	d->currentList = d->layer[layerName];
         for (int i = 0; i < d->currentList->size(); i++) {
@@ -96,8 +96,8 @@ void ViewLayer::switchLayer()
 	hideLayer(currentLayer);
 	showLayer(newLayer);
 	
-	qDebug()<<"CurrentLayer::"<<currentLayer;
-	qDebug()<<"NewLayer::"<<newLayer;
+        qDebug()<<"CurrentLayer::"<<currentLayer;
+        qDebug()<<"NewLayer::"<<newLayer;
 }
 QStringList ViewLayer::layerIndex() const
 {

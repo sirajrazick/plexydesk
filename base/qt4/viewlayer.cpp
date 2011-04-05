@@ -62,8 +62,13 @@ void ViewLayer::hideLayer(const QString &layerName)
         qDebug("Invalid Layer:  ViewLayer::hideLayer()");
     } else {
         qDebug()<<Q_FUNC_INFO <<layerName;
+<<<<<<< HEAD
         p->currentList = d->currentList;
         d->currentList = d->layer[layerName];
+=======
+	p->currentList = d->currentList;
+	d->currentList = d->layer[layerName];
+>>>>>>> 02f31d7a8dea99f410e196b4daa3a93d7b3c7935
         for (int i = 0; i < d->currentList->size(); i++) {
             if (d->currentList->at(i)) {
                 d->currentList->at(i)->hide();

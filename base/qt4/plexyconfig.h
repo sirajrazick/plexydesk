@@ -48,11 +48,11 @@ namespace PlexyDesk
         QStringList widgetList;
         bool m_collisionOn;
         QString iconTheme;
-
-     public Q_SLOTS:
+     
+    public Q_SLOTS:
         void setWallpaper(const QString &str);
         void addWidget(const QString &widget);
-        void changeLayer(const QString &layer);
+        void changeLayer();
 
     Q_SIGNALS:
         void configChanged();

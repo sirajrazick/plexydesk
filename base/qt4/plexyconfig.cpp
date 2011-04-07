@@ -113,7 +113,7 @@ void Config::addWidget(const QString &widget)
     writeToFile();
 }
 
-void Config::changeLayer(const QString &layer)
+void Config::changeLayer()
 {
 	qDebug()<<Q_FUNC_INFO;
 	emit layerChange();

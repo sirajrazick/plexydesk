@@ -66,6 +66,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_BINARY_DIR}/extensions/widgets/youtubewidget
     ${CMAKE_BINARY_DIR}/extensions/widgets/videoview
     ${CMAKE_BINARY_DIR}/extensions/widgets/wallpaper-win32
+    ${CMAKE_BINARY_DIR}/extensions/widgets/googleweather
     ${CMAKE_BINARY_DIR}/extensions/data/presence
     ${CMAKE_BINARY_DIR}/extensions/data/flicker
     ${CMAKE_BINARY_DIR}/extensions/data/rss
@@ -96,13 +97,14 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_SOURCE_DIR}/social/
     ${CMAKE_SOURCE_DIR}/social/libs/service/
     ${CMAKE_BINARY_DIR}/social/libs/service/
+    ${CMAKE_SOURCE_DIR}/extensions/widgets/googleweather/
     ${QT_INCLUDE_DIR}
 )
 
 ADD_SUBDIRECTORY(base/qt4/)
 ADD_SUBDIRECTORY(extensions/backdrop/classicdrop)
 ADD_SUBDIRECTORY(extensions/widgets/imagepile)
-
+ADD_SUBDIRECTORY(extensions/widgets/googleweather)
 ADD_SUBDIRECTORY(data)
 IF (NOT APPLE)
 IF (UNIX)

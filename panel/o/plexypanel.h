@@ -2,8 +2,6 @@
 #define PLEXYPANEL_H
 
 #include <QWidget>
-#include <QTextEdit>
-#include <QPushButton>
 
 class PlexyPanel : public QWidget
 {
@@ -11,16 +9,13 @@ class PlexyPanel : public QWidget
 public:
     PlexyPanel(QWidget *parent = 0, Qt::WindowFlags f = 0);
     virtual ~PlexyPanel();
+
 private slots:
-    void switchLayer();
-    void addWidget();
-    void searchWidget();
+    void slt();
+
 private:
-    QTextEdit *searchText;
-    QPushButton *searchButton;
-    QPushButton *addWidgetButton;
-    QPushButton *changeLayerButton;
     void setup();
+    void test();
 };
 
 #endif // PLEXYPANEL_H

@@ -37,8 +37,8 @@ void PlexyPanel::setup()
     info.setWindowType(NET::Dock);
     info.setState(winId(), NET::Sticky | NET::StaysOnTop | NET::KeepAbove);
     info.setDesktop(NETWinInfo::OnAllDesktops);
-    setWindowOpacity(0.3);
-    searchText = new QTextEdit();
+    setWindowOpacity(0.8);
+    searchText = new QTextEdit(this);
     QLabel *lbl = new QLabel("Applications");
     searchButton = new QPushButton("Search");
     addWidgetButton = new QPushButton("Add Widget");

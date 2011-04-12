@@ -57,8 +57,19 @@ class googleweatherWidget:public DesktopWidget
         **/
         void tempInCel(QPainter *p,QString temp,int x,int y, bool c, int size);
         QString getDay(QString);
+       /**
+	* Draw the content to the screen. 
+	* @param p the QPainter object which painting is done
+	**/
         void drawSet(QPainter *p);
-        void setCity_UI(QPainter *p);
+       /**
+ 	* Use this method to change the city
+        * @param p the QPainter object which painting is done
+        **/
+        void setCity(QPainter *p);
+        void getError(QPainter *p);
+        bool isDataGood();
+
         QRectF clip;
         QRectF view;
         int shade;
@@ -66,11 +77,14 @@ class googleweatherWidget:public DesktopWidget
         QImage widgetBack;
         QImage w_ImageDock;
         QVariantMap weatherdata;
+
 	WeatherPlugin *weather;
+
         QStringList weatherKeys;
         QStringList weatherValues;
-        QString prefix; 
-        int initD,DS_EXTF,initTimer;
+        QString prefix;
+        QString CURRENT_CITY;
+ 
     private slots:
        /**
         * Requested data is unwrapped so the widget body can understand

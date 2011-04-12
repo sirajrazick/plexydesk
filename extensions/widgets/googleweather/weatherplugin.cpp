@@ -88,7 +88,6 @@ void WeatherPlugin::prepareData()
     query.setQuery("for $x in //xml_api_reply/weather/forecast_information  return string($x /current_date_time/@data)");
     query.evaluateTo(&c_date);
 
-
     weatherXml.clear();
 
     QString imgName = image.at(0);
@@ -112,6 +111,7 @@ void WeatherPlugin::prepareData()
     c_date.clear();
     c_date<<imgName;
 
+    weatherData.clear();
     weatherData["z1f_Day"] = QVariant(forecastDay);
     weatherData["z3f_LowTemp"] = QVariant(forecastLowTemp);
     weatherData["z4f_HighTemp"] = QVariant(forecastHighTemp);
@@ -123,14 +123,18 @@ void WeatherPlugin::prepareData()
     weatherData["z5curr_image"] = QVariant(image);
     weatherData["z6fore_image"] = QVariant(f_image);
     weatherData["z7curr_date"] = QVariant(c_date);
-
-    qDebug()<<Q_FUNC_INFO;
     emit weatherDataReady();
 }
 
 QVariantMap WeatherPlugin::getWeatherData()
 {
-   return weatherData;
+   if (!weatherData.empty())
+       return weatherData;
+   else
+   {
+       weatherData["Error"] = QVariant("Network failure");
+       return weatherData;
+   }
 }
 
 void WeatherPlugin::requestData()
@@ -143,5 +147,4 @@ void WeatherPlugin::requestData()
    request["pass"] = "";
    QVariant args = QVariant(request);
    restEngine->pushData(args);
-   qDebug()<<Q_FUNC_INFO;
 }

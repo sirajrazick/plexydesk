@@ -88,9 +88,9 @@ INCLUDE_DIRECTORIES(
 )
 
 ADD_SUBDIRECTORY(base/qt4/)
-#ADD_SUBDIRECTORY(extensions/backdrop/classicdrop)
-#ADD_SUBDIRECTORY(data)
-#ADD_SUBDIRECTORY(runner)
+ADD_SUBDIRECTORY(extensions/backdrop/classicdrop)
+ADD_SUBDIRECTORY(data)
+ADD_SUBDIRECTORY(runner)
 
 IF (NOT APPLE)
 IF (UNIX)
@@ -99,9 +99,11 @@ ADD_SUBDIRECTORY(social)
 ADD_SUBDIRECTORY(social/accountsmanager/)
 ENDIF (UNIX)
 
+IF(NOT WIN32)
 IF(FFMPEG_FOUND)
-#ADD_SUBDIRECTORY(extensions/data/videoengine/)
+ADD_SUBDIRECTORY(extensions/data/videoengine/)
 ENDIF(FFMPEG_FOUND)
+ENDIF(NOT WIN32)
 
 # Removed from building
 #ADD_SUBDIRECTORY(extensions/widgets/cpu) // TODO : port this
@@ -113,8 +115,8 @@ ENDIF (NOT APPLE)
 #ADD_SUBDIRECTORY(artwork)
 #ADD_SUBDIRECTORY(artwork/plexyfren_theme/default/)
 #ADD_SUBDIRECTORY(3rdparty/libmagic)
-#ADD_SUBDIRECTORY(3rdparty/mime)
-#ADD_SUBDIRECTORY(3rdparty/qplexymime)
+ADD_SUBDIRECTORY(3rdparty/mime)
+ADD_SUBDIRECTORY(3rdparty/qplexymime)
 #ADD_SUBDIRECTORY(3rdparty/webitem)
 
 # Removed from building

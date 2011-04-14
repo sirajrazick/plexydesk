@@ -111,7 +111,7 @@ ENDIF(NOT WIN32)
 
 ENDIF (NOT APPLE)
 
-#ADD_SUBDIRECTORY(plexylib/fbjson)
+ADD_SUBDIRECTORY(plexylib/fbjson)
 #ADD_SUBDIRECTORY(artwork)
 #ADD_SUBDIRECTORY(artwork/plexyfren_theme/default/)
 ADD_SUBDIRECTORY(3rdparty/libmagic)

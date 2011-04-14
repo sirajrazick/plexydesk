@@ -117,7 +117,7 @@ ADD_SUBDIRECTORY(plexylib/fbjson)
 ADD_SUBDIRECTORY(3rdparty/libmagic)
 ADD_SUBDIRECTORY(3rdparty/mime)
 ADD_SUBDIRECTORY(3rdparty/qplexymime)
-#ADD_SUBDIRECTORY(3rdparty/webitem)
+ADD_SUBDIRECTORY(3rdparty/webitem)
 
 # Removed from building
 #ADD_SUBDIRECTORY(3rdparty/cair)

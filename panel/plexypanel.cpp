@@ -38,7 +38,7 @@ void PlexyPanel::setup()
     info.setState(winId(), NET::Sticky | NET::StaysOnTop | NET::KeepAbove);
     info.setDesktop(NETWinInfo::OnAllDesktops);
     setWindowOpacity(0.8);
-    searchText = new QTextEdit(this);
+    searchText = new QLineEdit(this);
     QLabel *lbl = new QLabel("Applications");
     searchButton = new QPushButton("Search");
     addWidgetButton = new QPushButton("Add Widget");
@@ -68,7 +68,7 @@ void PlexyPanel::addWidget()
     QDBusMessage busMsg = QDBusMessage::createMethodCall("org.PlexyDesk.Config","/Configuration","local.PlexyDesk.Config","addWidget");
     QDBusConnection bus = QDBusConnection::connectToBus(QDBusConnection::SessionBus,"PlexyDesk");
     QList<QVariant> args;
-    args<<QVariant(searchText->toPlainText());
+    args<<QVariant(searchText->text());
     busMsg.setArguments(args);
     bus.call(busMsg);
 }
@@ -79,12 +79,12 @@ void PlexyPanel::searchWidget()
     bool found = false;
     foreach(QString plugin,availableWidgets)
     {
-	if (plugin == searchText->toPlainText()){
+	if (plugin == searchText->text()){
 	    addWidget();	
 	    found = true;
 	    return;
 	}
     }
     if (!found)
-	searchText->setPlainText("Error no such widget found");
+	searchText->setText("Error no such widget found");
 }

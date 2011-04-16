@@ -2,7 +2,7 @@
 #define PLEXYPANEL_H
 
 #include <QWidget>
-#include <QTextEdit>
+#include <QLineEdit>
 #include <QPushButton>
 
 class PlexyPanel : public QWidget
@@ -16,7 +16,7 @@ private slots:
     void addWidget();
     void searchWidget();
 private:
-    QTextEdit *searchText;
+    QLineEdit *searchText;
     QPushButton *searchButton;
     QPushButton *addWidgetButton;
     QPushButton *changeLayerButton;
